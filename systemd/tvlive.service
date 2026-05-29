@@ -1,7 +1,7 @@
 [Unit]
 Description=TVLive — serveur télécommande
-After=network-online.target
-Wants=network-online.target
+After=graphical-session.target network-online.target
+Wants=graphical-session.target
 
 [Service]
 Type=simple
@@ -10,6 +10,8 @@ ExecStart=/home/stein/Documents/TVLive/venv/bin/python /home/stein/Documents/TVL
 Restart=on-failure
 RestartSec=5
 Environment=HOME=/home/stein
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=/home/stein/.Xauthority
 
 [Install]
 WantedBy=default.target

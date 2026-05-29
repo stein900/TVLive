@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=Désactiver Onboard au démarrage
+Comment=Évite les demandes de mot de passe « accès clavier » avec TVLive
+Hidden=true
+NoDisplay=true
+X-GNOME-Autostart-enabled=false

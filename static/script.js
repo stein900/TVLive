@@ -20,6 +20,7 @@
   const btnBack = document.getElementById("btn-back");
   const btnRemoteOnly = document.getElementById("btn-remote-only");
   const STORAGE_VIEW = "tvlive-view";
+  const btnCloseBrave = document.getElementById("btn-close-brave");
   const btnKeyboardToggle = document.getElementById("btn-keyboard-toggle");
   const keyboardPanel = document.getElementById("keyboard-panel");
   const keyboardForm = document.getElementById("keyboard-form");
@@ -75,6 +76,16 @@
 
   if (btnRemoteOnly) {
     btnRemoteOnly.addEventListener("click", () => openRemoteOnly("Télécommande"));
+  }
+
+  if (btnCloseBrave) {
+    btnCloseBrave.addEventListener("click", () => {
+      socketEmit("close_brave");
+      btnCloseBrave.disabled = true;
+      setTimeout(() => {
+        btnCloseBrave.disabled = false;
+      }, 1500);
+    });
   }
 
   // ——— Clavier distant ———

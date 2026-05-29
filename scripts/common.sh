@@ -20,6 +20,7 @@ fi
 
 PORT="${PORT:-5000}"
 KIOSK_URL="${KIOSK_URL:-https://anime-sama.to/}"
+BRAVE_PROFILE_DIR="${BRAVE_PROFILE_DIR:-$HOME/.config/tvlive-brave}"
 PYTHON="$TVLIVE_DIR/venv/bin/python"
 export DISPLAY="${DISPLAY:-:0}"
 
@@ -61,8 +62,29 @@ tvlive_disable_screensaver() {
   xset s noblank 2>/dev/null || true
 }
 
+tvlive_init_brave_profile() {
+  bash "$TVLIVE_DIR/scripts/init-brave-profile.sh"
+}
+
+tvlive_brave_base_args() {
+  echo "--user-data-dir=${BRAVE_PROFILE_DIR}"
+  echo "--no-first-run"
+  echo "--no-default-browser-check"
+  echo "--disable-session-crashed-bubble"
+  echo "--hide-crash-restore-bubble"
+  echo "--disable-restore-session-state"
+}
+
+tvlive_close_brave() {
+  export DISPLAY="${DISPLAY:-:0}"
+  # Ne tuer que le Brave du profil TVLive (pas votre Brave personnel)
+  pkill -f "user-data-dir=${BRAVE_PROFILE_DIR}" 2>/dev/null || true
+  pkill -f "${BRAVE_PROFILE_DIR}" 2>/dev/null || true
+}
+
 tvlive_open_tv_mode() {
   tvlive_disable_screensaver
+  tvlive_init_brave_profile
 
   local brave="brave-browser"
   command -v "$brave" &>/dev/null || brave="brave-browser-stable"
@@ -71,16 +93,20 @@ tvlive_open_tv_mode() {
     return 1
   }
 
-  # Une seule fenêtre kiosk (relance si déjà ouverte)
-  pkill -f "${brave}.*--kiosk" 2>/dev/null || true
+  tvlive_close_brave
   sleep 0.3
 
-  "$brave" \
-    --kiosk \
-    --start-fullscreen \
-    --no-first-run \
-    --disable-infobars \
-    --overscroll-history-navigation=0 \
-    "$KIOSK_URL" \
-    >>"$LOG_DIR/brave.log" 2>&1 &
+  local -a args=("$brave")
+  while IFS= read -r flag; do
+    args+=("$flag")
+  done < <(tvlive_brave_base_args)
+  args+=(
+    --kiosk
+    --start-fullscreen
+    --disable-infobars
+    --overscroll-history-navigation=0
+    "$KIOSK_URL"
+  )
+
+  "${args[@]}" >>"$LOG_DIR/brave.log" 2>&1 &
 }

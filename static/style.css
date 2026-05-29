@@ -321,8 +321,13 @@ body {
   white-space: nowrap;
 }
 
-.btn-keyboard {
+.trackpad-actions {
   flex-shrink: 0;
+  display: flex;
+  gap: 0.35rem;
+}
+
+.btn-icon {
   width: 2.5rem;
   height: 2.5rem;
   border: 1px solid var(--border);
@@ -330,7 +335,31 @@ body {
   background: var(--bg-card);
   color: var(--text);
   font-size: 1.05rem;
+  line-height: 1;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-icon:active {
+  transform: scale(0.96);
+}
+
+.btn-close-brave {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffb4b4;
+  border-color: rgba(229, 9, 20, 0.35);
+}
+
+.btn-close-brave:active {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-close-brave:disabled {
+  opacity: 0.5;
 }
 
 .btn-keyboard.active {

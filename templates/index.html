@@ -8,9 +8,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#0a0a0a">
   <title>TVLive — Télécommande</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=8">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9">
   <script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='script.js') }}?v=8" defer></script>
+  <script src="{{ url_for('static', filename='script.js') }}?v=9" defer></script>
 </head>
 <body>
   <div id="app">
@@ -39,9 +39,14 @@
           ← Retour
         </button>
         <span id="trackpad-title" class="trackpad-title"></span>
-        <button type="button" id="btn-keyboard-toggle" class="btn-keyboard" aria-expanded="false">
-          ⌨️
-        </button>
+        <div class="trackpad-actions">
+          <button type="button" id="btn-close-brave" class="btn-icon btn-close-brave" aria-label="Fermer Brave et tous les onglets">
+            ✕
+          </button>
+          <button type="button" id="btn-keyboard-toggle" class="btn-icon btn-keyboard" aria-expanded="false" aria-label="Clavier">
+            ⌨️
+          </button>
+        </div>
       </header>
       <div class="trackpad-row">
         <div id="trackpad" class="trackpad" role="application" aria-label="Trackpad tactile">

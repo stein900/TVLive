@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=TVLive — Mettre à jour
+Comment=Télécharge les dernières modifications depuis GitHub (git pull)
+Exec=/home/stein/Documents/TVLive/Mettre-a-jour-TVLive.sh
+Path=/home/stein/Documents/TVLive
+Icon=software-update-available
+Terminal=false
+Categories=Utility;
+StartupNotify=true
