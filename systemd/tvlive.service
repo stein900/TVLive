@@ -1,0 +1,15 @@
+[Unit]
+Description=TVLive — serveur télécommande
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/stein/Documents/TVLive
+ExecStart=/home/stein/Documents/TVLive/venv/bin/python /home/stein/Documents/TVLive/app.py
+Restart=on-failure
+RestartSec=5
+Environment=HOME=/home/stein
+
+[Install]
+WantedBy=default.target

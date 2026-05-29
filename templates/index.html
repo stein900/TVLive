@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#0a0a0a">
+  <title>TVLive — Télécommande</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=8">
+  <script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='script.js') }}?v=8" defer></script>
+</head>
+<body>
+  <div id="app">
+    <!-- Vue Accueil -->
+    <section id="view-home" class="view active">
+      <header class="header">
+        <div class="header-top">
+          <h1 class="logo">TV<span>Live</span></h1>
+          <p class="subtitle">Télécommande streaming</p>
+        </div>
+        <button type="button" id="btn-remote-only" class="btn-remote">
+          <span class="btn-remote-icon" aria-hidden="true">◎</span>
+          <span class="btn-remote-text">Télécommande seule</span>
+        </button>
+      </header>
+      <div class="section-head">
+        <h2 class="section-title">Services</h2>
+      </div>
+      <main id="catalogue-grid" class="grid" aria-live="polite"></main>
+    </section>
+
+    <!-- Vue Trackpad -->
+    <section id="view-trackpad" class="view">
+      <header class="trackpad-header">
+        <button type="button" id="btn-back" class="btn-back" aria-label="Retour à l'accueil">
+          ← Retour
+        </button>
+        <span id="trackpad-title" class="trackpad-title"></span>
+        <button type="button" id="btn-keyboard-toggle" class="btn-keyboard" aria-expanded="false">
+          ⌨️
+        </button>
+      </header>
+      <div class="trackpad-row">
+        <div id="trackpad" class="trackpad" role="application" aria-label="Trackpad tactile">
+          <p class="trackpad-hint">1 doigt : déplacer · Tap : clic</p>
+        </div>
+        <div class="scroll-safe" aria-label="Scroll">
+          <button type="button" id="scroll-up" class="scroll-btn" aria-label="Défiler vers le haut">▲</button>
+          <button type="button" id="scroll-down" class="scroll-btn" aria-label="Défiler vers le bas">▼</button>
+        </div>
+      </div>
+      <div id="keyboard-panel" class="keyboard-panel" hidden>
+        <form id="keyboard-form" class="keyboard-form" autocomplete="off">
+          <input
+            type="text"
+            id="keyboard-input"
+            class="keyboard-input"
+            placeholder="Tapez ici (clavier du téléphone)…"
+            enterkeyhint="send"
+            maxlength="500"
+            autocomplete="off"
+            autocorrect="off"
+            autocapitalize="off"
+            spellcheck="false"
+          >
+          <button type="submit" class="btn-send-text">Envoyer</button>
+        </form>
+        <div class="keyboard-shortcuts">
+          <button type="button" class="key-btn" data-key="BackSpace">⌫</button>
+          <button type="button" class="key-btn" data-key="space">Espace</button>
+          <button type="button" class="key-btn" data-key="Return">Entrée</button>
+          <button type="button" class="key-btn" data-key="Escape">Échap</button>
+          <button type="button" class="key-btn" data-key="Tab">Tab</button>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

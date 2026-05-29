@@ -1,0 +1,58 @@
+[
+  {
+    "title": "Télécommande",
+    "image": "",
+    "url": "",
+    "remote_only": true
+  },
+  {
+    "title": "Voiranime",
+    "image": "/static/catalogue/luffy.jpg",
+    "url": "https://voir-anime.to/"
+  },
+  {
+    "title": "Anime-Sama",
+    "image": "/static/catalogue/kimetsu.jpg",
+    "url": "https://anime-sama.to/"
+  },
+  {
+    "title": "Netflix",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg",
+    "url": "https://www.netflix.com"
+  },
+  {
+    "title": "Disney+",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg",
+    "url": "https://www.disneyplus.com"
+  },
+  {
+    "title": "Prime Video",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg",
+    "url": "https://www.primevideo.com"
+  },
+  {
+    "title": "YouTube",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/09/YouTube_full-color_icon_%282017%29.svg",
+    "url": "https://www.youtube.com"
+  },
+  {
+    "title": "Crunchyroll",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/0/08/Crunchyroll_Logo.svg",
+    "url": "https://www.crunchyroll.com"
+  },
+  {
+    "title": "Twitch",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/2/26/Twitch_logo.svg",
+    "url": "https://www.twitch.tv"
+  },
+  {
+    "title": "One Piece · Anime-Sama",
+    "image": "https://upload.wikimedia.org/wikipedia/fr/3/37/One_Piece_logo.svg",
+    "url": "https://anime-sama.to/catalogue/one-piece/"
+  },
+  {
+    "title": "One Piece · Voiranime",
+    "image": "https://upload.wikimedia.org/wikipedia/fr/3/37/One_Piece_logo.svg",
+    "url": "https://voir-anime.to/anime/one-piece/"
+  }
+]

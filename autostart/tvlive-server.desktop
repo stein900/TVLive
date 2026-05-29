@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=TVLive Serveur
+Comment=Démarre le serveur TVLive au login
+Exec=/bin/bash -c 'sleep 2; systemctl --user start tvlive.service 2>/dev/null || /home/stein/Documents/TVLive/venv/bin/python /home/stein/Documents/TVLive/app.py >> /home/stein/Documents/TVLive/logs/server.log 2>&1 &'
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=2

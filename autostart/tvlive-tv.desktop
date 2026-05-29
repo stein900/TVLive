@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=TVLive Mode TV
+Comment=Ouvre le streaming en plein écran au démarrage
+Exec=/home/stein/Documents/TVLive/Lancer-TVLive.sh
+Hidden=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
+X-GNOME-Autostart-Delay=8

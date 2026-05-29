@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=TVLive — Mode TV
+Comment=Démarre TVLive et ouvre le streaming en plein écran
+Exec=/home/stein/Documents/TVLive/Lancer-TVLive.sh
+Path=/home/stein/Documents/TVLive
+Icon=display
+Terminal=false
+Categories=AudioVideo;Player;
+StartupNotify=true
+X-GNOME-Autostart-enabled=false
