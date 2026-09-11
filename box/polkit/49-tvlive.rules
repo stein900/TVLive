@@ -1,0 +1,14 @@
+// TVLive : autoriser l'utilisateur de la box à éteindre / redémarrer sans mot de passe
+// (installé par install-box.sh, __USER__ remplacé par le nom d'utilisateur)
+polkit.addRule(function (action, subject) {
+  if (subject.user !== "__USER__") {
+    return polkit.Result.NOT_HANDLED;
+  }
+  if (action.id === "org.freedesktop.login1.power-off" ||
+      action.id === "org.freedesktop.login1.power-off-multiple-sessions" ||
+      action.id === "org.freedesktop.login1.reboot" ||
+      action.id === "org.freedesktop.login1.reboot-multiple-sessions") {
+    return polkit.Result.YES;
+  }
+  return polkit.Result.NOT_HANDLED;
+});

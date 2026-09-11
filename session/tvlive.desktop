@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=TVLive (box TV)
+Comment=Écran TV plein écran — TVLive
+Exec=/home/stein/Documents/TVLive/session/tvlive-session.sh
+TryExec=/home/stein/Documents/TVLive/session/tvlive-session.sh
+Type=Application
+DesktopNames=TVLive

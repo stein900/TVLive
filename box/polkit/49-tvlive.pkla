@@ -1,0 +1,6 @@
+[TVLive : extinction et redémarrage sans mot de passe]
+Identity=unix-user:__USER__
+Action=org.freedesktop.login1.power-off;org.freedesktop.login1.power-off-multiple-sessions;org.freedesktop.login1.reboot;org.freedesktop.login1.reboot-multiple-sessions
+ResultAny=yes
+ResultInactive=yes
+ResultActive=yes

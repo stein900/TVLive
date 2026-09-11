@@ -19,14 +19,14 @@ X-GNOME-Autostart-enabled=false
 EOF
 
 # Ne plus lancer Brave automatiquement au boot (évite popups clé / keyring)
-sed "s|/home/stein|$HOME_DIR|g" "$TVLIVE_DIR/autostart/tvlive-tv.desktop" >"$HOME_DIR/.config/autostart/tvlive-tv.desktop"
+sed "s|/home/stein/Documents/TVLive|$TVLIVE_DIR|g; s|/home/stein|$HOME_DIR|g" "$TVLIVE_DIR/autostart/tvlive-tv.desktop" >"$HOME_DIR/.config/autostart/tvlive-tv.desktop"
 
 # Serveur avec DISPLAY au login
-sed "s|/home/stein|$HOME_DIR|g" "$TVLIVE_DIR/autostart/tvlive-server.desktop" >"$HOME_DIR/.config/autostart/tvlive-server.desktop"
+sed "s|/home/stein/Documents/TVLive|$TVLIVE_DIR|g; s|/home/stein|$HOME_DIR|g" "$TVLIVE_DIR/autostart/tvlive-server.desktop" >"$HOME_DIR/.config/autostart/tvlive-server.desktop"
 
 # Service systemd utilisateur (démarre après session graphique)
 mkdir -p "$HOME_DIR/.config/systemd/user"
-sed "s|/home/stein|$HOME_DIR|g" "$TVLIVE_DIR/systemd/tvlive.service" >"$HOME_DIR/.config/systemd/user/tvlive.service"
+sed "s|/home/stein/Documents/TVLive|$TVLIVE_DIR|g; s|/home/stein|$HOME_DIR|g" "$TVLIVE_DIR/systemd/tvlive.service" >"$HOME_DIR/.config/systemd/user/tvlive.service"
 systemctl --user daemon-reload
 systemctl --user enable tvlive.service
 systemctl --user restart tvlive.service || systemctl --user start tvlive.service

@@ -8,9 +8,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#0a0a0a">
   <title>TVLive — Télécommande</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=9">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}?v=10">
   <script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
-  <script src="{{ url_for('static', filename='script.js') }}?v=9" defer></script>
+  <script src="{{ url_for('static', filename='script.js') }}?v=10" defer></script>
 </head>
 <body>
   <div id="app">
@@ -18,36 +18,40 @@
     <section id="view-home" class="view active">
       <header class="header">
         <div class="header-top">
-          <h1 class="logo">TV<span>Live</span></h1>
-          <p class="subtitle">Télécommande streaming</p>
+          <div class="header-titles">
+            <h1 class="logo">TV<span>Live</span></h1>
+            <p class="subtitle">Télécommande</p>
+          </div>
+          <div class="header-actions">
+            <button type="button" id="btn-tv-home" class="btn-icon btn-home" aria-label="Accueil TV">⌂</button>
+            <button type="button" id="btn-settings" class="btn-icon" aria-label="Réglages">⚙</button>
+          </div>
         </div>
         <button type="button" id="btn-remote-only" class="btn-remote">
           <span class="btn-remote-icon" aria-hidden="true">◎</span>
-          <span class="btn-remote-text">Télécommande seule</span>
+          <span class="btn-remote-text">Télécommande &amp; navigation</span>
         </button>
       </header>
-      <div class="section-head">
-        <h2 class="section-title">Services</h2>
-      </div>
-      <main id="catalogue-grid" class="grid" aria-live="polite"></main>
+      <main id="catalogue-grid" class="catalogue" aria-live="polite"></main>
     </section>
 
     <!-- Vue Trackpad -->
     <section id="view-trackpad" class="view">
       <header class="trackpad-header">
-        <button type="button" id="btn-back" class="btn-back" aria-label="Retour à l'accueil">
-          ← Retour
+        <button type="button" id="btn-back" class="btn-back" aria-label="Retour à la liste">
+          ← Liste
         </button>
         <span id="trackpad-title" class="trackpad-title"></span>
         <div class="trackpad-actions">
-          <button type="button" id="btn-close-brave" class="btn-icon btn-close-brave" aria-label="Fermer Brave et tous les onglets">
-            ✕
+          <button type="button" id="btn-close-brave" class="btn-icon btn-home" aria-label="Accueil TV (ferme le service)">
+            ⌂
           </button>
           <button type="button" id="btn-keyboard-toggle" class="btn-icon btn-keyboard" aria-expanded="false" aria-label="Clavier">
-            ⌨️
+            ⌨
           </button>
         </div>
       </header>
+
       <div class="trackpad-row">
         <div id="trackpad" class="trackpad" role="application" aria-label="Trackpad tactile">
           <p class="trackpad-hint">1 doigt : déplacer · Tap : clic</p>
@@ -57,6 +61,29 @@
           <button type="button" id="scroll-down" class="scroll-btn" aria-label="Défiler vers le bas">▼</button>
         </div>
       </div>
+
+      <div class="dpad-bar">
+        <div class="dpad" aria-label="Navigation">
+          <span></span>
+          <button type="button" class="key-btn dpad-btn" data-key="Up" aria-label="Haut">▲</button>
+          <span></span>
+          <button type="button" class="key-btn dpad-btn" data-key="Left" aria-label="Gauche">◀</button>
+          <button type="button" class="key-btn dpad-btn dpad-ok" data-key="Return" aria-label="OK">OK</button>
+          <button type="button" class="key-btn dpad-btn" data-key="Right" aria-label="Droite">▶</button>
+          <span></span>
+          <button type="button" class="key-btn dpad-btn" data-key="Down" aria-label="Bas">▼</button>
+          <span></span>
+        </div>
+        <div class="side-keys">
+          <button type="button" class="key-btn side-btn" data-key="Escape" aria-label="Retour">↩ Retour</button>
+          <button type="button" class="key-btn side-btn" data-key="space" aria-label="Lecture / pause">⏯</button>
+          <button type="button" class="key-btn side-btn" data-key="f" aria-label="Plein écran vidéo">⛶</button>
+          <button type="button" class="key-btn side-btn vol-btn" data-vol="down" aria-label="Volume moins">🔉</button>
+          <button type="button" class="key-btn side-btn vol-btn" data-vol="up" aria-label="Volume plus">🔊</button>
+          <button type="button" class="key-btn side-btn vol-btn" data-vol="mute" aria-label="Muet">🔇</button>
+        </div>
+      </div>
+
       <div id="keyboard-panel" class="keyboard-panel" hidden>
         <form id="keyboard-form" class="keyboard-form" autocomplete="off">
           <input
@@ -83,5 +110,42 @@
       </div>
     </section>
   </div>
+
+  <!-- Réglages (feuille) -->
+  <div id="sheet" class="sheet" hidden>
+    <div class="sheet-backdrop" data-sheet-close></div>
+    <div class="sheet-panel" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+      <div class="sheet-handle"></div>
+      <h2 id="sheet-title" class="sheet-title">Réglages</h2>
+      <dl class="status-list">
+        <div><dt>Télécommande</dt><dd id="st-url">—</dd></div>
+        <div><dt>Version</dt><dd id="st-version">—</dd></div>
+        <div><dt>Mode</dt><dd id="st-mode">—</dd></div>
+      </dl>
+      <div class="sheet-actions">
+        <button type="button" class="sheet-btn" data-action="home">
+          <span class="sheet-btn-icon">⌂</span> <span class="sheet-btn-label">Accueil TV</span> <small>ferme les services ouverts</small>
+        </button>
+        <button type="button" class="sheet-btn" data-action="restart_browser">
+          <span class="sheet-btn-icon">↻</span> <span class="sheet-btn-label">Redémarrer l'écran TV</span>
+        </button>
+        <button type="button" class="sheet-btn" data-action="update">
+          <span class="sheet-btn-icon">⬇</span> <span class="sheet-btn-label">Mettre à jour TVLive</span> <small>git pull + redémarrage</small>
+        </button>
+        <button type="button" class="sheet-btn" data-action="desktop_once">
+          <span class="sheet-btn-icon">🖥</span> <span class="sheet-btn-label">Mode PC (une fois)</span> <small>bureau Linux jusqu'au prochain démarrage</small>
+        </button>
+        <button type="button" class="sheet-btn sheet-btn--danger" data-action="reboot" data-confirm>
+          <span class="sheet-btn-icon">⟳</span> <span class="sheet-btn-label">Redémarrer la box</span>
+        </button>
+        <button type="button" class="sheet-btn sheet-btn--danger" data-action="poweroff" data-confirm>
+          <span class="sheet-btn-icon">⏻</span> <span class="sheet-btn-label">Éteindre la box</span>
+        </button>
+      </div>
+      <button type="button" class="sheet-close" data-sheet-close>Fermer</button>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
 </body>
 </html>

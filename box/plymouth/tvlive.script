@@ -1,0 +1,88 @@
+# Thème Plymouth « TVLive » : fond noir, logo TV·Live, trois points animés.
+# Aucune image externe : tout est rendu par Image.Text.
+
+Window.SetBackgroundTopColor(0.02, 0.02, 0.03);
+Window.SetBackgroundBottomColor(0.02, 0.02, 0.03);
+
+screen_w = Window.GetWidth();
+screen_h = Window.GetHeight();
+
+font_size = Math.Int(screen_h / 12);
+if (font_size < 24) font_size = 24;
+logo_font = "Sans Bold " + font_size;
+
+tv_image = Image.Text("TV", 1.0, 1.0, 1.0, 1.0, logo_font);
+live_image = Image.Text("Live", 0.90, 0.04, 0.08, 1.0, logo_font);
+
+logo_w = tv_image.GetWidth() + live_image.GetWidth();
+logo_h = tv_image.GetHeight();
+logo_x = (screen_w - logo_w) / 2;
+logo_y = (screen_h - logo_h) / 2 - logo_h / 2;
+
+tv_sprite = Sprite(tv_image);
+tv_sprite.SetPosition(logo_x, logo_y, 1);
+live_sprite = Sprite(live_image);
+live_sprite.SetPosition(logo_x + tv_image.GetWidth(), logo_y, 1);
+
+# Points de chargement
+dot_font = "Sans " + Math.Int(font_size / 2);
+dot_image = Image.Text("•", 1.0, 1.0, 1.0, 1.0, dot_font);
+dot_gap = dot_image.GetWidth() * 1.6;
+dots_w = dot_gap * 2 + dot_image.GetWidth();
+dot_y = logo_y + logo_h + logo_h * 0.55;
+for (i = 0; i < 3; i++) {
+  dot_sprite[i] = Sprite(dot_image);
+  dot_sprite[i].SetPosition((screen_w - dots_w) / 2 + i * dot_gap, dot_y, 1);
+  dot_sprite[i].SetOpacity(0.25);
+}
+
+tick = 0;
+fade_in = 0;
+
+fun refresh_callback() {
+  tick++;
+  if (fade_in < 1) {
+    fade_in += 0.04;
+    if (fade_in > 1) fade_in = 1;
+    tv_sprite.SetOpacity(fade_in);
+    live_sprite.SetOpacity(fade_in);
+  }
+  for (i = 0; i < 3; i++) {
+    phase = tick / 6 - i * 1.2;
+    level = (Math.Sin(phase) + 1) / 2;
+    dot_sprite[i].SetOpacity(0.15 + 0.85 * level * fade_in);
+  }
+}
+Plymouth.SetRefreshFunction(refresh_callback);
+
+# Messages système (fsck, etc.) — discrets, en bas
+message_sprite = Sprite();
+message_sprite.SetPosition(0, screen_h - font_size, 2);
+
+fun message_callback(text) {
+  img = Image.Text(text, 0.45, 0.45, 0.5, 1.0, "Sans " + Math.Int(font_size / 3));
+  message_sprite.SetImage(img);
+  message_sprite.SetPosition((screen_w - img.GetWidth()) / 2, screen_h - font_size, 2);
+}
+Plymouth.SetMessageFunction(message_callback);
+
+# Saisie mot de passe (disque chiffré) : on affiche l'invite + des étoiles
+prompt_sprite = Sprite();
+fun display_password_callback(prompt, bullets) {
+  stars = "";
+  for (i = 0; i < bullets; i++) stars += "•";
+  img = Image.Text(prompt + "  " + stars, 0.9, 0.9, 0.9, 1.0, "Sans " + Math.Int(font_size / 3));
+  prompt_sprite.SetImage(img);
+  prompt_sprite.SetPosition((screen_w - img.GetWidth()) / 2, dot_y + logo_h, 3);
+  prompt_sprite.SetOpacity(1);
+}
+Plymouth.SetDisplayPasswordFunction(display_password_callback);
+
+fun display_normal_callback() {
+  prompt_sprite.SetOpacity(0);
+}
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+
+fun quit_callback() {
+}
+Plymouth.SetQuitFunction(quit_callback);

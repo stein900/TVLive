@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=TVLive
+Description=Écran de démarrage TVLive (box TV)
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/tvlive
+ScriptFile=/usr/share/plymouth/themes/tvlive/tvlive.script

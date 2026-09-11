@@ -1,4 +1,4 @@
-/* TVLive — Interface pro, mobile-first */
+/* TVLive — Télécommande mobile */
 
 *,
 *::before,
@@ -18,6 +18,7 @@
   --accent-soft: rgba(229, 9, 20, 0.18);
   --text: #f4f4f5;
   --text-muted: #9ca3af;
+  --ok: #34d399;
   --radius: 10px;
   --radius-lg: 14px;
   --shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
@@ -48,6 +49,11 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+button {
+  font: inherit;
+  color: inherit;
+}
+
 #app {
   height: 100%;
   position: relative;
@@ -74,19 +80,21 @@ body {
 
 .header {
   flex-shrink: 0;
-  padding: calc(1rem + var(--safe-top)) 1.15rem 0.85rem;
+  padding: calc(0.9rem + var(--safe-top)) 1.15rem 0.85rem;
   border-bottom: 1px solid var(--border);
   background: rgba(11, 11, 15, 0.92);
   backdrop-filter: blur(12px);
 }
 
 .header-top {
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-bottom: 0.85rem;
 }
 
 .logo {
-  font-size: 1.65rem;
+  font-size: 1.6rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   line-height: 1.1;
@@ -97,12 +105,17 @@ body {
 }
 
 .subtitle {
-  margin-top: 0.2rem;
-  font-size: 0.8rem;
+  margin-top: 0.1rem;
+  font-size: 0.72rem;
   font-weight: 500;
   color: var(--text-muted);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+}
+
+.header-actions {
+  display: flex;
+  gap: 0.45rem;
 }
 
 .btn-remote {
@@ -132,13 +145,20 @@ body {
   opacity: 0.9;
 }
 
-.section-head {
-  flex-shrink: 0;
-  padding: 0.75rem 1.15rem 0.35rem;
+.catalogue {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.5rem 1rem calc(1.25rem + var(--safe-bottom));
+}
+
+.category {
+  margin-top: 0.6rem;
 }
 
 .section-title {
-  font-size: 0.75rem;
+  padding: 0.5rem 0.15rem 0.45rem;
+  font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -146,10 +166,6 @@ body {
 }
 
 .grid {
-  flex: 1;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  padding: 0.5rem 1rem calc(1.25rem + var(--safe-bottom));
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 0.7rem;
@@ -167,8 +183,6 @@ body {
   .grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1rem;
-    padding-left: 1.25rem;
-    padding-right: 1.25rem;
   }
 }
 
@@ -334,7 +348,7 @@ body {
   border-radius: 8px;
   background: var(--bg-card);
   color: var(--text);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   line-height: 1;
   cursor: pointer;
   display: flex;
@@ -346,19 +360,18 @@ body {
   transform: scale(0.96);
 }
 
-.btn-close-brave {
-  font-size: 1.15rem;
-  font-weight: 700;
+.btn-home {
+  font-size: 1.35rem;
   color: #ffb4b4;
   border-color: rgba(229, 9, 20, 0.35);
 }
 
-.btn-close-brave:active {
+.btn-home:active {
   background: var(--accent);
   color: #fff;
 }
 
-.btn-close-brave:disabled {
+.btn-home:disabled {
   opacity: 0.5;
 }
 
@@ -430,11 +443,76 @@ body {
   border-color: var(--accent);
 }
 
+/* ——— D-pad + touches ——— */
+
+.dpad-bar {
+  flex-shrink: 0;
+  display: flex;
+  gap: 0.75rem;
+  padding: 0.65rem 1rem 0.35rem;
+}
+
+.dpad {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 2.9rem);
+  grid-template-rows: repeat(3, 2.9rem);
+  gap: 0.3rem;
+}
+
+.key-btn {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.key-btn:active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.dpad-btn {
+  font-size: 1rem;
+}
+
+.dpad-ok {
+  background: var(--accent-soft);
+  border-color: rgba(229, 9, 20, 0.45);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+}
+
+.side-keys {
+  flex: 1;
+  min-width: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: minmax(2.9rem, 1fr);
+  gap: 0.3rem;
+}
+
+.side-btn {
+  font-size: 1.05rem;
+  padding: 0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.side-btn[data-key="Escape"] {
+  font-size: 0.78rem;
+}
+
 /* ——— Clavier ——— */
 
 .keyboard-panel {
   flex-shrink: 0;
-  padding: 0.65rem 1rem calc(0.7rem + var(--safe-bottom));
+  padding: 0.5rem 1rem calc(0.7rem + var(--safe-bottom));
   background: var(--bg-elevated);
   border-top: 1px solid var(--border);
   user-select: auto;
@@ -442,6 +520,10 @@ body {
 
 .keyboard-panel[hidden] {
   display: none;
+}
+
+#view-trackpad:not(.keyboard-open) .dpad-bar {
+  padding-bottom: calc(0.6rem + var(--safe-bottom));
 }
 
 .keyboard-form {
@@ -485,23 +567,210 @@ body {
   gap: 0.35rem;
 }
 
-.key-btn {
+.keyboard-shortcuts .key-btn {
   flex: 1;
   min-width: calc(33% - 0.25rem);
   padding: 0.5rem;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  background: var(--bg-card);
-  color: var(--text);
-  font-size: 0.8rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.key-btn:active {
-  background: var(--bg-elevated);
 }
 
 #view-trackpad.keyboard-open .trackpad-row {
   padding-bottom: 0.25rem;
+}
+
+/* ——— Feuille Réglages ——— */
+
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+}
+
+.sheet[hidden] {
+  display: none;
+}
+
+.sheet-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  animation: fade-in 0.2s ease both;
+}
+
+.sheet-panel {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 88dvh;
+  overflow-y: auto;
+  padding: 0.6rem 1.1rem calc(1rem + var(--safe-bottom));
+  border-radius: 18px 18px 0 0;
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.5);
+  animation: slide-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.sheet-handle {
+  width: 2.6rem;
+  height: 0.28rem;
+  margin: 0 auto 0.8rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.sheet-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.status-list {
+  display: grid;
+  gap: 0.25rem;
+  margin-bottom: 0.9rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  font-size: 0.82rem;
+}
+
+.status-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.status-list dt {
+  color: var(--text-muted);
+}
+
+.status-list dd {
+  text-align: right;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  user-select: text;
+}
+
+.sheet-actions {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.sheet-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg-card);
+  color: var(--text);
+  font-size: 0.92rem;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  flex-wrap: wrap;
+}
+
+.sheet-btn small {
+  flex-basis: 100%;
+  padding-left: 2.1rem;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.sheet-btn:active {
+  background: var(--bg);
+}
+
+.sheet-btn-icon {
+  width: 1.4rem;
+  text-align: center;
+  font-size: 1.05rem;
+}
+
+.sheet-btn--danger {
+  border-color: rgba(229, 9, 20, 0.35);
+}
+
+.sheet-btn--danger .sheet-btn-icon {
+  color: #ffb4b4;
+}
+
+.sheet-btn.is-confirm {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.sheet-btn.is-confirm .sheet-btn-icon {
+  color: #fff;
+}
+
+.sheet-btn:disabled {
+  opacity: 0.5;
+}
+
+.sheet-close {
+  width: 100%;
+  margin-top: 0.8rem;
+  padding: 0.75rem;
+  border: none;
+  border-radius: var(--radius);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { transform: translateY(100%); }
+  to { transform: none; }
+}
+
+/* ——— Toast ——— */
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(1.4rem + var(--safe-bottom));
+  z-index: 60;
+  max-width: calc(100% - 2rem);
+  transform: translateX(-50%) translateY(0.5rem);
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: rgba(24, 24, 30, 0.96);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+.toast.on {
+  opacity: 1;
+  transform: translateX(-50%);
+}
+
+.toast.toast--error {
+  border-color: rgba(229, 9, 20, 0.5);
+  color: #ffb4b4;
+}
+
+.toast[hidden] {
+  display: none;
 }

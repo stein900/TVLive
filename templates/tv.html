@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TVLive</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='tv.css') }}?v=1">
+  <script src="{{ url_for('static', filename='socket.io.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='tv.js') }}?v=1" defer></script>
+</head>
+<body class="is-booting">
+  <!-- Voile de démarrage -->
+  <div id="boot" class="boot" aria-hidden="true">
+    <div class="boot-logo">TV<span>Live</span></div>
+  </div>
+
+  <!-- Fond dynamique (visuel du contenu mis en avant) -->
+  <div id="bg" class="bg">
+    <div id="bg-img" class="bg-img"></div>
+    <div class="bg-shade"></div>
+  </div>
+
+  <header class="top">
+    <div class="brand">TV<span>Live</span></div>
+    <div class="top-right">
+      <div id="remote-status" class="pill" data-count="0">
+        <span class="dot"></span>
+        <span id="remote-text" class="pill-text">Télécommande</span>
+      </div>
+      <time id="clock" class="clock">--:--</time>
+    </div>
+  </header>
+
+  <main id="main" class="main">
+    <section id="hero" class="hero">
+      <p class="hero-kicker" id="hero-kicker"></p>
+      <h1 class="hero-title" id="hero-title"></h1>
+      <p class="hero-sub" id="hero-sub"></p>
+      <button type="button" class="hero-btn" id="hero-btn">
+        <span class="hero-btn-icon">▶</span>
+        <span id="hero-btn-text">Lancer</span>
+      </button>
+    </section>
+    <div id="rows" class="rows"></div>
+  </main>
+
+  <footer class="foot">
+    <span id="foot-remote" class="foot-remote"></span>
+    <span class="foot-hint">◀ ▲ ▼ ▶ naviguer &nbsp;·&nbsp; OK lancer &nbsp;·&nbsp; Retour : haut de page</span>
+  </footer>
+
+  <div id="launch" class="launch" hidden>
+    <div class="launch-inner">
+      <div class="spinner"></div>
+      <p id="launch-text"></p>
+    </div>
+  </div>
+
+  <div id="ambient" class="ambient" hidden>
+    <time id="ambient-clock" class="ambient-clock"></time>
+    <p id="ambient-date" class="ambient-date"></p>
+    <div class="ambient-brand">TV<span>Live</span></div>
+  </div>
+
+  <div id="toast" class="toast" hidden></div>
+</body>
+</html>
